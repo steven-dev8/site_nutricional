@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inputs Dinâmicos com jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="trabalho.css">
+</head>
+<body class="graph">
+  <div class="faixa-verde"></div>
+  <br>
+  <br>
+  <br>
+  <div id="inputs-container"></div>
+  <div class="graph">
+      <canvas id="grafico1"></canvas>
+  </div>
+  <div class="graph">
+      <canvas id="grafico2"></canvas>
+  </div>
+
+  <script>
+    var chart1, chart2;
+
+    const param_food = new URLSearchParams(window.location.search)
+    var dict_comidas = new Map()
+    param_food.forEach((quant, comida) => {
+      if (quant){
+        dict_comidas.set(comida, quant)
+      }
+    })
+
+    // Dados nutricionais dos alimentos
+    const alimentos = {
+      'arroz_branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
+      'feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
+      'pão_francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5 },
+      'laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12 },
+      'carne_bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0 },
+      'carne de frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6 },
+      'ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0 },
+      'café': { carboidratos: 0.0, proteinas: 0.1, gorduras: 0.0 },
+      'banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
+      'batata_branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
+    };
+    calcularNutrientes()
+    function calcularNutrientes() {
+      var resultados = { carboidratos: [], proteinas: [], gorduras: [] };
+      var lista_comidas = []
+      
+      dict_comidas.forEach((quant, comida) => {
+        lista_comidas.push(comida)
+        resultados.carboidratos.push(parseFloat(quant) * parseFloat(alimentos[comida].carboidratos / 100))
+        resultados.proteinas.push(parseFloat(quant) * parseFloat(alimentos[comida].proteinas / 100))
+        resultados.gorduras.push(parseFloat(quant) * parseFloat(alimentos[comida].gorduras / 100))
+      })
+      atualizarGrafico(lista_comidas, resultados)
+    }
+    
+
+    function atualizarGrafico(lista_comidas, resultados = null) {
+      alert('OI')
+      chart1.data.labels = lista_comidas;
+      chart1.data.datasets[0].data = resultados.carboidratos;
+      chart1.data.datasets[1].data = resultados.proteinas;
+      chart1.data.datasets[2].data = resultados.gorduras;
+      chart1.update();
+      
+      // Atualizar gráfico de linhas (soma de nutrientes)
+      var totais = lista_comidas.map((_, i) => 
+        resultados.carboidratos[i] + resultados.proteinas[i] + resultados.gorduras[i]
+      );
+      chart2.data.labels = lista_comidas;
+      chart2.data.datasets[0].data = totais;
+      chart2.update();
+    }
+
+    $(document).ready(function() {
+      const ctx1 = document.getElementById('grafico1').getContext('2d');
+      chart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: [],
+          datasets: [
+            { label: 'Carboidratos (g)', data: [], backgroundColor: '#6fe904' },
+            { label: 'Proteínas (g)', data: [], backgroundColor: '#608E37' },
+            { label: 'Gorduras (g)', data: [], backgroundColor: '#36521f' }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Nutrientes dos Alimentos' }
+          }
+        }
+      });
+
+      const ctx2 = document.getElementById("grafico2").getContext('2d');
+      chart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{ label: 'Soma Total (g)', data: [], borderColor: '#608E37', borderWidth: 2 }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' },
+            title: { display: true, text: 'Total de Nutrientes por Alimento' }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
