@@ -1,0 +1,81 @@
+.cabecalho {
+    background-color: orange;
+}
+
+table {
+    border: solid black 1px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+td, th {
+    border: solid black 1px;
+}
+
+tr:first-child th {
+    border: solid orange 1px; 
+}
+
+div.graph{
+    margin-top: 20px;
+    width: 600px;
+    height: 300px;
+    margin-bottom: 100px
+}
+canvas{
+    width: 100%;
+    height: 100%;
+}
+body.graph{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    margin: 10px;
+    z-index: 1000;
+}
+
+.erro{
+    color: red
+}
+
+
+.faixa-verde {
+    width: 100%;
+    height: 50px; 
+    background-color: #98FB98; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.container{
+    background-color: #36521f;
+    align-items: center;  
+
+}
+
+body.diario{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.diario{
+    margin: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 500px;
+    height: 300px ;
+   
+}
+
+table.diario{
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+}
