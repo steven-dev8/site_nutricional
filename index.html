@@ -23,43 +23,43 @@
     <form action="graphics.html" method="GET">
     <section class="container">
         <div>
-            <img src="assets/image/arroz.jpg" alt="">
-            <input type="text" name="Arroz branco" placeholder="Ex: 100">
+            <img src="assets/image/arroz.jpg" alt="arroz" id="img1">
+            <input type="text" name="Arroz branco" placeholder="Ex: 100g">
         </div>
         <div>
-            <img src="assets/image/pao-frances.jpg" alt="">
+            <img src="assets/image/feijao.jpg" alt="pao frances" id="img2">
             <input type="text" name="Feijão" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/pao.jpg" alt="">
+            <img src="assets/image/pao.jpg" alt="pao frances" id="img3">
             <input type="text" name="Pão francês" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/laranja.jpg" alt="">
+            <img src="assets/image/laranja.jpg" alt="laranja" id="img4">
             <input type="text" name="Laranja" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/carne_bovina.jpg" alt="">
+            <img src="assets/image/carne_bovina.jpg" alt="carne bovina" id="img5">
             <input type="text" name="Carne Bovina" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/feijao.jpg" alt="">
+            <img src="assets/image/frango.jpg" alt="feijao" id="img6">
             <input type="text" name="Carne de Frango" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/ovo.jpg" alt="">
+            <img src="assets/image/ovo.jpg" alt="ovo" id="img7">
             <input type="text" name="Ovo" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/cafe.jpg" alt="">
+            <img src="assets/image/cafe.jpg" alt="cafe" id="img8">
             <input type="text" name="Café" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/banana.jpg" alt="">
+            <img src="assets/image/banana.jpg" alt="banana" id="img9">
             <input type="text" name="Banana" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/batata.jpg" alt="">
+            <img src="assets/image/batata.jpg" alt="batata" id="img10">
             <input type="text" name="Batata Branca" placeholder="Ex: 100">
         </div>
     </section>
@@ -72,5 +72,40 @@
     <footer>
         <p>© NutriLife - Since 2024</p>
     </footer>
+
+    <script>
+        const alimentos = {
+    'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
+    'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
+    'Pão francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5 },
+    'Laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12 },
+    'Carne Bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0 },
+    'Carne de Frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6 },
+    'Ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0 },
+    'Café': { carboidratos: 0.0, proteinas: 0.0, gorduras: 0.0 },
+    'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
+    'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
+};
+
+var i = 0;
+
+Object.entries(alimentos).forEach(([chave, valor]) => {
+    i = i + 1;
+    $(`#img${i}`).after(`<div class="macros">
+                            <table>
+                                <tr class="name">
+                                    <td>${chave}</td>
+                                </tr>
+                                <tr>
+                                    <td class="proteina">Proteina:${valor.proteinas}gff</td>
+                                    <td class="carboidrato">Carboidrato:${valor.carboidratos}gff</td>
+                                    <td class="gordura">Gordura:${valor.gorduras}gff</td>
+                                </tr>
+                            </table>
+                          </div>`);
+});
+
+        
+    </script>
 </body>
 </html>
