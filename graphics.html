@@ -10,17 +10,20 @@
     <link rel="stylesheet" href="css/graphics.css">
 </head>
 <body class="graph">
-  <div class="faixa-verde"></div>
-  <br>
-  <br>
-  <br>
-  <div id="inputs-container"></div>
+  <div class="header">
+    <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
+  </div><br>
+  <div id="inputs-container"></div><br>
   <div class="graph">
       <canvas id="grafico1"></canvas>
   </div>
   <div class="graph">
       <canvas id="grafico2"></canvas>
   </div>
+
+  <footer>
+    <p>© NutriLife - Since 2024</p>
+  </footer>
 
   <script>
     const param_food = new URLSearchParams(window.location.search)
@@ -97,10 +100,10 @@
 
       const ctx2 = document.getElementById("grafico2").getContext('2d');
       chart2 = new Chart(ctx2, {
-        type: 'line',
+        type: 'pie',
         data: {
-          labels: [],
-          datasets: [{ label: 'Soma Total (g)', data: [], borderColor: '#608E37', borderWidth: 2 }]
+          labels: [], 
+          datasets: [{ label: 'Soma Total (g)',backgroundColor: ['#6fe904', '#4CAF50', '#36521f', '#81C784', '#2E7D32', '#A5D6A7', '#1B5E20', '#66BB6A', '#33691E', '#76FF03'], data: [],borderWidth: 2 }]
         },
         options: {
           responsive: true,
