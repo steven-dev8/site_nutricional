@@ -6,15 +6,14 @@
 table{
     border: 3px solid #608E37;
     border-collapse: separate;
-    margin: 30px;
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    overflow: hidden;
 }
 
 td, th{
     border: 1px solid #608E37;
+    width: 200px;
     padding: 10px;
     text-align: center;
 }
@@ -40,12 +39,12 @@ header {
 }
 
 body{
-    width: 100%;
-    height: 100%;
+    width: 100wh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     background-color: #d7fad7;
 };
-    
-    
 
 .logo{
     width: 50px;
@@ -54,11 +53,9 @@ body{
 }
 
 footer{
+    margin-top: auto;
     background-color: #4A722C;
     text-align: center;
-    position: relative;   
-    height: 50px; 
-    margin-top: 12px;
 }
 
 footer p{
@@ -73,15 +70,15 @@ footer p{
 
 .container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 40px;
     align-items: center;
-    height: 100vh;
+    height: 800px;
 }
 
-.tamanho{
-    height: 700px;
-    width: 700px;
-    margin: 0px 50px 50px 0px;
+.refeicoes{
+    position: relative;
+    bottom:250px
 }
 
 caption{
@@ -90,11 +87,41 @@ caption{
 }
 
 .formulario{
+    position: relative;
+    bottom: 241px;
+    width: 700px;
+    height: 220px;
+}
+
+.formulario td {
+    position: relative;
+    border: 0px;
+}
+
+.button_enviar {
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+}
+.button_reset{
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.button {
+    position: relative;
+    left: 150px;
+}
+
+.meta{
+    border-style: solid;
+    border-color: #608E37;
+    border-radius: 2px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 700px;
-    height: 700px;
-    margin: 45px 0px 0px 0px;
-
+    width: 900px;
+    position: relative;
+    bottom: 500px;
+    left: 430px;
 }
