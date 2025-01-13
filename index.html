@@ -23,44 +23,44 @@
     <form action="graphics.html" method="GET">
     <section class="container">
         <div>
-            <img src="assets/image/arroz.jpg" alt="">
-            <input type="text" name="Arroz branco" placeholder="Ex: 100">
+            <img src="assets/image/arroz.jpg" alt="arroz" id="img1">
+            <input class="linha1" type="text" name="Arroz branco" placeholder="Ex: 100g">
         </div>
         <div>
-            <img src="assets/image/feijao.jpg" alt="">
-            <input type="text" name="Feijão" placeholder="Ex: 100">
+            <img src="assets/image/feijao.jpg" alt="pao frances" id="img2">
+            <input class="linha1" type="text" name="Feijão" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/pao.jpg" alt="">
-            <input type="text" name="Pão francês" placeholder="Ex: 100">
+            <img src="assets/image/pao.jpg" alt="pao frances" id="img3">
+            <input class="linha1" type="text" name="Pão francês" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/laranja.jpg" alt="">
-            <input type="text" name="Laranja" placeholder="Ex: 100">
+            <img src="assets/image/laranja.jpg" alt="laranja" id="img4">
+            <input class="linha1" type="text" name="Laranja" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/carne_bovina.jpg" alt="">
-            <input type="text" name="Carne Bovina" placeholder="Ex: 100">
+            <img src="assets/image/carne_bovina.jpg" alt="carne bovina" id="img5">
+            <input class="linha1" type="text" name="Carne Bovina" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/carne_frango.jpg" alt="">
-            <input type="text" name="Carne de Frango" placeholder="Ex: 100">
+            <img src="assets/image/frango.jpg" alt="feijao" id="img6">
+            <input class="linha2" type="text" name="Carne de Frango" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/ovo.jpg" alt="">
-            <input type="text" name="Ovo" placeholder="Ex: 100">
+            <img src="assets/image/ovo.jpg" alt="ovo" id="img7">
+            <input class="linha2" type="text" name="Ovo" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/cafe.jpg" alt="">
-            <input type="text" name="Café" placeholder="Ex: 100">
+            <img src="assets/image/cafe.jpg" alt="cafe" id="img8">
+            <input class="linha2" type="text" name="Café" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/banana.jpg" alt="">
-            <input type="text" name="Banana" placeholder="Ex: 100">
+            <img src="assets/image/banana.jpg" alt="banana" id="img9">
+            <input class="linha2" type="text" name="Banana" placeholder="Ex: 100">
         </div>
         <div>
-            <img src="assets/image/batata.jpg" alt="">
-            <input type="text" name="Batata Branca" placeholder="Ex: 100">
+            <img src="assets/image/batata.jpg" alt="batata" id="img10">
+            <input class="linha2" type="text" name="Batata Branca" placeholder="Ex: 100">
         </div>
     </section>
 
@@ -72,5 +72,45 @@
     <footer>
         <p>© NutriLife - Since 2024</p>
     </footer>
+
+    <script>
+        const alimentos = {
+    'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3, fibras: 0.400, acucares: 100, sodio: 1, potassio: 35, calcio: 10, vitaminas: null },
+    'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5, fibras: 1.300, acucares: 1, sodio: 0.2, potassio: 1.5, calcio: 50, vitaminas: 'B9' },
+    'Pão francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5, fibras: 2.500, acucares: 2.5, sodio: 47, potassio: 120, calcio: 20, vitaminas: null },
+    'Laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12, fibras: 1.800, acucares: 9.35, sodio: 1, potassio: 180, calcio: 4, vitaminas: 'C' },
+    'Carne Bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0, fibras: 0, acucares: 0, sodio: 65, potassio: 350, calcio: 1, vitaminas: null },
+    'Carne de Frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6, fibras: 0, acucares: 0, sodio: 70, potassio: 300, calcio: 1, vitaminas: null },
+    'Ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0, fibras: 0, acucares: 0, sodio: 120, potassio: 126, calcio: 5, vitaminas: 'B12' },
+    'Café': { carboidratos: 0.0, proteinas: 0.0, gorduras: 0.0, fibras: 0, acucares: 0.5, sodio: 90, potassio: 0, calcio: 0, vitaminas: null },
+    'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33, fibras: 0, acucares: 12.230, sodio: 0.1, potassio: 360, calcio: 5, vitaminas: 'B6' },
+    'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1, fibras: 0, acucares: 1.25, sodio: 0.6, potassio: 425, calcio: 10, vitaminas: 'C' }
+};
+
+var i = 0;
+
+Object.entries(alimentos).forEach(([chave, valor]) => {
+    i = i + 1;
+    $(`#img${i}`).after(`<div class="macros">
+                            <table>
+                                <tr class="name">
+                                    <td>${chave}</td>
+                                </tr>
+                                <tr class="aqui">
+                                    <td class="proteina">Proteina:${valor.proteinas}g</td>
+                                    <td class="carboidrato">Carboidrato:${valor.carboidratos}g</td>
+                                    <td class="gordura">Gordura:${valor.gorduras}g</td>
+                                    ${valor.fibras > 1 ? `<td class="fibra">Fibras: ${valor.fibras}mg</td>` : '<td class="off"></td>'}
+                                    ${valor.acucares > 10 ? `<td class="acuca">Açúcares: ${valor.acucares}mg</td>` : '<td class="off"></td>'}
+                                    ${valor.sodio > 10 ? `<td class="sodio">Sódio: ${valor.sodio}mg</td>` : '<td class="off"></td>'}
+                                    ${valor.potassio > 10 ? `<td class="pota">Potássio: ${valor.potassio}mg</td>` : '<td class="off"></td>'}
+                                    ${valor.calcio > 10 ? `<td class="cal">Cálcio: ${valor.calcio}mg</td>` : '<td class="off"></td>'}
+                                </tr>
+                            </table>
+                          </div>`);
+});
+
+        
+    </script>
 </body>
 </html>
