@@ -23,39 +23,47 @@
             <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
         </div>
     </header>
-
     <div class="container">
-        <div class="formulario">
-            <table>
-                
-            </table>
-        </div>
-        <div class="refeicoes">
-            <table>
-                <caption>Refeições do dia</caption>
-                    <tr>
-                        <td>REFEIÇÕES</td> <td>CARBOIDRATOS</td> <td>PROTEÍNAS</td> <td>GORDURAS</td>
-                    </tr>
-                    <tr>
-                        <td>1ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
-                    </tr>
-                    <tr>
-                        <td>2ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
-                    </tr>
-                    <tr>
-                        <td>3ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
-                    </tr>
-                    <tr>
-                        <td>4ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
-                    </tr>
-            </table>
-        </div>
+        <table class="adicionar">
+            <tr>
+                <td><input type="checkbox"> 1ª REFEIÇÃO</td> <td><input type="checkbox"> 2ª REFEIÇÃO</td> <td><input type="checkbox"> 3ª REFEIÇÃO</td> <td><input type="checkbox"> 4ª REFEIÇÃO</td>
+            </tr>
+
+            <tr>
+                <td colspan="4" text-align="center"><button class="botao">Adicionar</button> <button class="botao">Voltar</button></td>
+            </tr>
+        </table>
+
+        <table class="refeicoes">
+            <caption>Refeições do dia</caption>
+            <tr>
+                <td>REFEIÇÕES</td> <td>CARBOIDRATOS</td> <td>PROTEÍNAS</td> <td>GORDURAS</td>
+            </tr>
+            <tr>
+                <td>1ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>2ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>3ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>4ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+            </tr>
+        </table>
     </div>
 
-    <div class="meta">
-        Calorias: <input type="text" id="calorias">
+    <div class="container2">
+        <table>
+        <td>
+        Carboidratos: <input type="text" id="calorias">
         Gordura: <input type="text id="gordura">
         Proteínas: <input type="text" id="proteina">
+        </td>
+        </table>
+
+        <button class="botao2">Adicionar dia a semana</button>
 
         <div class="grafico">
             <canvas id="metas"></canvas>
@@ -65,26 +73,51 @@
     <script>
         const ctx = $('#metas');
 
-        new Chart(ctx, {
-    type: 'line',
+new Chart(ctx, {
+    type: 'line', // Gráfico de linha
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
+        labels: ['Dia 1', 'Dia 2', 'Dia 3'], // Rótulos para o eixo x
+        datasets: [
+            {
+                label: 'Carboidratos(g)', 
+                data: [], // Apenas o valor para "Carboidratos"
+                borderColor: '#6fe904',
+                backgroundColor: 'rgba(111, 233, 4, 0.2)',
+                tension: 0.4, // Curvatura da linha
+                fill: false
+            },
+            {
+                label: 'Proteínas(g)', 
+                data: [], // Apenas o valor para "Proteínas"
+                borderColor: '#608E37',
+                backgroundColor: 'rgba(96, 142, 55, 0.2)',
+                tension: 0.4,
+                fill: false
+            },
+            {
+                label: 'Gorduras(g)', 
+                data: [], // Apenas o valor para "Gorduras"
+                borderColor: '#36521f',
+                backgroundColor: 'rgba(54, 82, 31, 0.2)',
+                tension: 0.4,
+                fill: false
+            },
+        ],
     },
     options: {
         responsive: true,
-        
-      scales: {
-        y: {
-          beginAtZero: true
+        plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'METAS' }
+        },
+        scales: {
+            y: {
+                beginAtZero: true // Começa no zero para melhor visualização
+            }
         }
-      }
     }
-  });
+});
+
 
     </script>
 </body>
