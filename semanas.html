@@ -26,11 +26,14 @@
     <div class="container">
         <table class="adicionar">
             <tr>
-                <td><input type="checkbox"> 1ª REFEIÇÃO</td> <td><input type="checkbox"> 2ª REFEIÇÃO</td> <td><input type="checkbox"> 3ª REFEIÇÃO</td> <td><input type="checkbox"> 4ª REFEIÇÃO</td>
+                <td><input type="checkbox" class="refeicao" value="primeira"> 1ª REFEIÇÃO</td>
+                <td><input type="checkbox" class="refeicao" value="segunda"> 2ª REFEIÇÃO</td>
+                <td><input type="checkbox" class="refeicao" value="terceira"> 3ª REFEIÇÃO</td>
+                <td><input type="checkbox" class="refeicao" value="quarta"> 4ª REFEIÇÃO</td>
             </tr>
 
             <tr>
-                <td colspan="4" text-align="center"><button class="botao">Adicionar</button> <button class="botao">Voltar</button></td>
+                <td colspan="4" text-align="center"><button class="botao" onclick="addRefeicao()">Adicionar</button> <button class="botao">Voltar</button></td>
             </tr>
         </table>
 
@@ -40,19 +43,82 @@
                 <td>REFEIÇÕES</td> <td>CARBOIDRATOS</td> <td>PROTEÍNAS</td> <td>GORDURAS</td>
             </tr>
             <tr>
-                <td>1ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+                <td>1ª REFEIÇÃO</td> <td id="carbo1"></td> <td id="prot1"></td> <td id="gord1"></td>
             </tr>
             <tr>
-                <td>2ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+                <td>2ª REFEIÇÃO</td> <td id="carbo2"></td> <td id="prot2"></td> <td id="gord2"></td>
             </tr>
             <tr>
-                <td>3ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+                <td>3ª REFEIÇÃO</td> <td id="carbo3"></td> <td id="prot3"></td> <td id="gord3"></td>
             </tr>
             <tr>
-                <td>4ª REFEIÇÃO</td> <td></td> <td></td> <td></td>
+                <td>4ª REFEIÇÃO</td> <td id="carbo4"></td> <td id="prot4"></td> <td id="gord4"></td>
             </tr>
         </table>
     </div>
+
+    <script>
+        const alimentos = {
+            'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
+            'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
+            'Pão francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5 },
+            'Laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12 },
+            'Carne Bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0 },
+            'Carne de Frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6 },
+            'Ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0 },
+            'Café': { carboidratos: 0.0, proteinas: 0.0, gorduras: 0.0 },
+            'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
+            'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
+        };
+
+        const valores = new URLSearchParams(window.location.search)
+        let dados = {}
+        valores.forEach((value, key) => {
+            dados[key] = value
+        })
+
+        info = {carboidrato: 0, proteina: 0, gordura: 0}
+
+        Object.keys(dados).forEach(key => {
+    if (alimentos[key]) {
+        info.carboidrato += alimentos[key].carboidratos;
+        info.proteina += alimentos[key].proteinas;
+        info.gordura += alimentos[key].gorduras;
+    }
+});
+
+        console.log(info)
+
+
+        function addRefeicao() {
+            let valoresMarcados = [];
+                
+            $('input[type="checkbox"]:checked').each(function() {
+                valoresMarcados.push($(this).val());
+            });
+
+            if (valoresMarcados.includes('primeira')){
+                $('#carbo1').text(`${info.carboidrato}g`);
+                $('#prot1').text(`${info.proteina}g`);
+                $('#gord1').text(`${info.gordura}g`);
+            }
+            if (valoresMarcados.includes('segunda')){
+                $('#carbo2').text(`${info.carboidrato}g`);
+                $('#prot2').text(`${info.proteina}g`);
+                $('#gord2').text(`${info.gordura}g`);
+            }
+            if (valoresMarcados.includes('terceira')){
+                $('#carbo3').text(`${info.carboidrato}g`);
+                $('#prot3').text(`${info.proteina}g`);
+                $('#gord3').text(`${info.gordura}g`);
+            }
+            if (valoresMarcados.includes('quarta')){
+                $('#carbo4').text(`${info.carboidrato}g`);
+                $('#prot4').text(`${info.proteina}g`);
+                $('#gord4').text(`${info.gordura}g`);
+            }
+    }
+    </script>
 
     <div class="container2">
         <table>

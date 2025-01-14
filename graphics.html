@@ -9,21 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link rel="stylesheet" href="css/graphics.css">
 </head>
-<body class="graph">
-  <div class="header">
-    <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
-  </div><br>
+<body>
+  <header class="header">
+    <div class="logo">
+        <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
+    </div>
+    <ul class="menu">
+        <li><a href="#">Alunos</a></li>
+        <li><a href="#">Sobre</a></li>
+    </ul>
+</header>
   <div id="inputs-container"></div><br>
   <div class="graph">
       <canvas id="grafico1"></canvas>
-  </div>
-  <div class="graph">
       <canvas id="grafico2"></canvas>
   </div>
-
-  <footer>
-    <p>© NutriLife - Since 2024</p>
-  </footer>
 
   <script>
     const param_food = new URLSearchParams(window.location.search)
@@ -34,7 +34,11 @@
       }
     })
 
-    // Dados nutricionais dos alimentos
+    function getInfos(){
+        const string_url = new URLSearchParams(dict_comidas).toString();
+        window.location.href = `semanas.html?${string_url}`;
+      }
+
     const alimentos = {
       'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
       'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
@@ -86,8 +90,8 @@
           datasets: [
             { label: 'Carboidratos (g)', data: [], backgroundColor: '#6fe904' },
             { label: 'Proteínas (g)', data: [], backgroundColor: '#608E37' },
-            { label: 'Gorduras (g)', data: [], backgroundColor: '#36521f' },
-          ],
+            { label: 'Gorduras (g)', data: [], backgroundColor: '#36521f' }
+          ]
         },
         options: {
           responsive: true,
@@ -115,6 +119,14 @@
       });
       calcularNutrientes() });
   </script>
+
+  <button class="botao_definir" onclick="getInfos()">DEFINIR REFEIÇÕES</button>
+
+  <footer>
+  <p>© NutriLife - Since 2024</p>
+  </footer>
+
+
 </body>
 </html>
 
