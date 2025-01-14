@@ -6,18 +6,16 @@
     <title>Semanas</title>
     <link rel="stylesheet" href="css/tabela_diaria.css">
     <script>
-    function dimensaoTela(){
-        var heightTela = window.innerHeight;
-        var widthTela = window.innerWidth;
-
-        document.getElementById('pag_processos').style.minHeight = heightTela+'px';
-}
+        function dimensaoTela() {
+            var heightTela = window.innerHeight;
+            document.getElementById('pag_processos').style.minHeight = heightTela + 'px';
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body  id="pag_processos" onload="dimensaoTela()">
+<body id="pag_processos" onload="dimensaoTela()">
     <header>
         <div class="logo">
             <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
@@ -31,12 +29,13 @@
                 <td><input type="checkbox" class="refeicao" value="terceira"> 3ª REFEIÇÃO</td>
                 <td><input type="checkbox" class="refeicao" value="quarta"> 4ª REFEIÇÃO</td>
             </tr>
-
             <tr>
-                <td colspan="4" text-align="center"><button class="botao" onclick="addRefeicao()">Adicionar</button> <button class="botao">Voltar</button></td>
+                <td colspan="4" style="text-align:center">
+                    <button class="botao" onclick="addRefeicao()">Adicionar</button>
+                    <button class="botao">Voltar</button>
+                </td>
             </tr>
         </table>
-
         <table class="refeicoes">
             <caption>Refeições do dia</caption>
             <tr>
@@ -71,120 +70,151 @@
             'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
         };
 
-        const valores = new URLSearchParams(window.location.search)
-        let dados = {}
+        const valores = new URLSearchParams(window.location.search);
+        let dados = {};
         valores.forEach((value, key) => {
-            dados[key] = value
-        })
+            dados[key] = value;
+        });
 
-        info = {carboidrato: 0, proteina: 0, gordura: 0}
-
+        let info = { carboidrato: 0, proteina: 0, gordura: 0 };
         Object.keys(dados).forEach(key => {
-    if (alimentos[key]) {
-        info.carboidrato += alimentos[key].carboidratos;
-        info.proteina += alimentos[key].proteinas;
-        info.gordura += alimentos[key].gorduras;
-    }
-});
-
-        console.log(info)
-
+            if (alimentos[key]) {
+                info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100);
+                info.proteina += (alimentos[key].proteinas * dados[key] / 100);
+                info.gordura += (alimentos[key].gorduras * dados[key] / 100);
+            }
+        });
 
         function addRefeicao() {
             let valoresMarcados = [];
-                
-            $('input[type="checkbox"]:checked').each(function() {
+            $('input[type="checkbox"]:checked').each(function () {
                 valoresMarcados.push($(this).val());
             });
 
-            if (valoresMarcados.includes('primeira')){
-                $('#carbo1').text(`${info.carboidrato}g`);
-                $('#prot1').text(`${info.proteina}g`);
-                $('#gord1').text(`${info.gordura}g`);
-            }
-            if (valoresMarcados.includes('segunda')){
-                $('#carbo2').text(`${info.carboidrato}g`);
-                $('#prot2').text(`${info.proteina}g`);
-                $('#gord2').text(`${info.gordura}g`);
-            }
-            if (valoresMarcados.includes('terceira')){
-                $('#carbo3').text(`${info.carboidrato}g`);
-                $('#prot3').text(`${info.proteina}g`);
-                $('#gord3').text(`${info.gordura}g`);
-            }
-            if (valoresMarcados.includes('quarta')){
-                $('#carbo4').text(`${info.carboidrato}g`);
-                $('#prot4').text(`${info.proteina}g`);
-                $('#gord4').text(`${info.gordura}g`);
-            }
-    }
+            const refeicoes = {
+                'primeira': ['#carbo1', '#prot1', '#gord1'],
+                'segunda': ['#carbo2', '#prot2', '#gord2'],
+                'terceira': ['#carbo3', '#prot3', '#gord3'],
+                'quarta': ['#carbo4', '#prot4', '#gord4']
+            };
+
+            valoresMarcados.forEach((refeicao) => {
+                const [carbo, prot, gord] = refeicoes[refeicao];
+                $(carbo).text(info.carboidrato.toFixed(2) + 'g');
+                $(prot).text(info.proteina.toFixed(2) + 'g');
+                $(gord).text(info.gordura.toFixed(2) + 'g');
+            });
+        }
     </script>
 
     <div class="container2">
         <table>
-        <td>
-        Carboidratos: <input type="text" id="calorias">
-        Gordura: <input type="text id="gordura">
-        Proteínas: <input type="text" id="proteina">
-        </td>
+            <tr>
+                <td>Carboidratos: <input type="text" id="carbo"></td>
+                <td>Proteínas: <input type="text" id="prot"></td>
+                <td>Gordura: <input type="text" id="gord"></td>
+            </tr>
         </table>
-
-        <button class="botao2">Adicionar dia a semana</button>
-
+        <button class="botao2" onclick="atualizarGrafico()">Adicionar dia a semana</button>
         <div class="grafico">
             <canvas id="metas"></canvas>
         </div>
     </div>
-    <footer><p>© aNutriLife - Since 2024</p></footer>
-    <script>
-        const ctx = $('#metas');
 
-new Chart(ctx, {
-    type: 'line', // Gráfico de linha
-    data: {
-        labels: ['Dia 1', 'Dia 2', 'Dia 3'], // Rótulos para o eixo x
-        datasets: [
-            {
-                label: 'Carboidratos(g)', 
-                data: [], // Apenas o valor para "Carboidratos"
-                borderColor: '#6fe904',
-                backgroundColor: 'rgba(111, 233, 4, 0.2)',
-                tension: 0.4, // Curvatura da linha
-                fill: false
-            },
-            {
-                label: 'Proteínas(g)', 
-                data: [], // Apenas o valor para "Proteínas"
-                borderColor: '#608E37',
-                backgroundColor: 'rgba(96, 142, 55, 0.2)',
-                tension: 0.4,
-                fill: false
-            },
-            {
-                label: 'Gorduras(g)', 
-                data: [], // Apenas o valor para "Gorduras"
-                borderColor: '#36521f',
-                backgroundColor: 'rgba(54, 82, 31, 0.2)',
-                tension: 0.4,
-                fill: false
-            },
-        ],
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { position: 'top' },
-            title: { display: true, text: 'METAS' }
+    <footer><p>© aNutriLife - Since 2024</p></footer>
+
+    <script>
+        let chart1;
+$(document).ready(function() {
+    const ctx = $('#metas');
+    chart1 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Dia 1', 'Dia 2', 'Dia 3'],
+            datasets: [
+                {
+                    label: 'Carboidratos(g)',
+                    data: [],
+                    borderColor: '#6fe904',
+                    backgroundColor: 'rgba(111, 233, 4, 0.2)',
+                    tension: 0.4,
+                    fill: false
+                },
+                {
+                    label: 'Proteínas(g)',
+                    data: [],
+                    borderColor: '#608E37',
+                    backgroundColor: 'rgba(96, 142, 55, 0.2)',
+                    tension: 0.4,
+                    fill: false
+                },
+                {
+                    label: 'Gorduras(g)',
+                    data: [],
+                    borderColor: '#36521f',
+                    backgroundColor: 'rgba(54, 82, 31, 0.2)',
+                    tension: 0.4,
+                    fill: false
+                },
+                {
+                    label: 'Meta Carboidratos(g)',
+                    data: [],
+                    borderColor: '#FA9F00',
+                    backgroundColor: 'rgba(250, 159, 0, 1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderDash: [5, 5], 
+                },
+                {
+                    label: 'Meta Proteínas(g)',
+                    data: [],
+                    borderColor: '#FA9F00',
+                    backgroundColor: 'rgba(250, 159, 0, 1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderDash: [5, 5],
+                },
+                {
+                    label: 'Meta Gorduras(g)',
+                    data: [],
+                    borderColor: '#FA9F00',
+                    backgroundColor: 'rgba(250, 159, 0, 1)',
+                    tension: 0.4,
+                    fill: false,
+                    borderDash: [5, 5],
+                }
+            ]
         },
-        scales: {
-            y: {
-                beginAtZero: true // Começa no zero para melhor visualização
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'METAS' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
+    });
 });
 
 
+function atualizarGrafico() {
+    let carboidratos = info.carboidrato.toFixed(2); 
+    let proteinas = info.proteina.toFixed(2);
+    let gorduras = info.gordura.toFixed(2);
+    let metas = [$('#carbo').val(), $('#prot').val(), $('#gord').val()];
+
+    chart1.data.datasets[0].data.push(carboidratos); 
+    chart1.data.datasets[1].data.push(proteinas);    
+    chart1.data.datasets[2].data.push(gorduras);
+
+    chart1.data.datasets[3].data.push(parseFloat(metas[0])); 
+    chart1.data.datasets[4].data.push(parseFloat(metas[1])); 
+    chart1.data.datasets[5].data.push(parseFloat(metas[2])); 
+
+    chart1.update(); 
+}
     </script>
-</body>
-</html>
