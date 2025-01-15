@@ -32,7 +32,12 @@
             <tr>
                 <td colspan="4" style="text-align:center">
                     <button class="botao" onclick="addRefeicao()">Adicionar</button>
-                    <button class="botao">Voltar</button>
+                    <button class="botao" onclick="window.location.href='index.html'">Voltar</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align:center">
+                    <button class="botao_maior" onclick="limparRef()">LIMPAR REFEIÇÕES</button>
                 </td>
             </tr>
         </table>
@@ -54,9 +59,41 @@
                 <td>4ª REFEIÇÃO</td> <td id="carbo4"></td> <td id="prot4"></td> <td id="gord4"></td>
             </tr>
         </table>
+        <table class="semana">
+            <caption>Dias da semana</caption>
+            <tr>
+                <td class="btn">DIA</td>
+                <td>CARBOIDRATO</td>
+                <td>PROTEINA</td>
+                <td>GORDURA</td>
+            </tr>
+            <tr>
+                <td>DIA 1</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 2</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 3</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 4</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 5</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 6</td> <td></td> <td></td> <td></td>
+            </tr>
+            <tr>
+                <td>DIA 7</td> <td></td> <td></td> <td></td>
+            </tr>
+        </table>
     </div>
 
+
     <script>
+
         const alimentos = {
             'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
             'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
@@ -76,6 +113,13 @@
             dados[key] = value;
         });
 
+        let local = [
+        localStorage.getItem('primeira') ? localStorage.getItem('primeira').split(',') : [],
+        localStorage.getItem('segunda') ? localStorage.getItem('segunda').split(',') : [],
+        localStorage.getItem('terceira') ? localStorage.getItem('terceira').split(',') : [],
+        localStorage.getItem('quarta') ? localStorage.getItem('quarta').split(',') : []
+    ];
+        
         let info = { carboidrato: 0, proteina: 0, gordura: 0 };
         Object.keys(dados).forEach(key => {
             if (alimentos[key]) {
@@ -85,7 +129,54 @@
             }
         });
 
+    function atualizarNutri(){
+        let refeicaoTotal = {
+            carboidratos: (parseFloat(local[0][0] || 0) + parseFloat(local[1][0] || 0) +
+                        parseFloat(local[2][0] || 0) + parseFloat(local[3][0] || 0)),
+            proteinas: (parseFloat(local[0][1] || 0) + parseFloat(local[1][1] || 0) +
+                        parseFloat(local[2][1] || 0) + parseFloat(local[3][1] || 0)),
+            gorduras: (parseFloat(local[0][2] || 0) + parseFloat(local[1][2] || 0) +
+                    parseFloat(local[2][2] || 0) + parseFloat(local[3][2] || 0))}
+};
+        atualizarNutri()
+    
+    function recurperarItens(){
+        if (localStorage.getItem('primeira')){
+            $('#carbo1').text(local[0][0] + 'g');
+            $('#prot1').text(local[0][1] + 'g');
+            $('#gord1').text(local[0][2] + 'g');
+        }
+
+        if (localStorage.getItem('segunda')){
+            $('#carbo2').text(local[1][0] + 'g');
+            $('#prot2').text(local[1][1] + 'g');
+            $('#gord2').text(local[1][2] + 'g');
+        }
+
+        if (localStorage.getItem('terceira')){
+            $('#carbo3').text(local[2][0] + 'g');
+            $('#prot3').text(local[2][1] + 'g');
+            $('#gord3').text(local[2][2] + 'g');
+        }
+
+        if (localStorage.getItem('quarta')){
+            $('#carbo4').text(local[3][0] + 'g');
+            $('#prot4').text(local[3][1] + 'g');
+            $('#gord4').text(local[3][2] + 'g');
+        }}
+
+        recurperarItens()
+
+        function limparRef(){
+            localStorage.getItem('primeira') ? localStorage.removeItem('primeira'): null,
+            localStorage.getItem('segunda') ? localStorage.removeItem('segunda'): null,
+            localStorage.getItem('terceira') ? localStorage.removeItem('terceira'): null,
+            localStorage.getItem('quarta') ? localStorage.removeItem('quarta'): null
+            location.reload()
+        }
+
         function addRefeicao() {
+            atualizarNutri()
             let valoresMarcados = [];
             $('input[type="checkbox"]:checked').each(function () {
                 valoresMarcados.push($(this).val());
@@ -100,9 +191,11 @@
 
             valoresMarcados.forEach((refeicao) => {
                 const [carbo, prot, gord] = refeicoes[refeicao];
-                $(carbo).text(info.carboidrato.toFixed(2) + 'g');
-                $(prot).text(info.proteina.toFixed(2) + 'g');
-                $(gord).text(info.gordura.toFixed(2) + 'g');
+                localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura])
+                console.log(localStorage.getItem(refeicao))
+                $(carbo).text(info.carboidrato + 'g');
+                $(prot).text(info.proteina + 'g');
+                $(gord).text(info.gordura + 'g');
             });
         }
     </script>
@@ -202,9 +295,9 @@ $(document).ready(function() {
 
 
 function atualizarGrafico() {
-    let carboidratos = info.carboidrato.toFixed(2); 
-    let proteinas = info.proteina.toFixed(2);
-    let gorduras = info.gordura.toFixed(2);
+    let carboidratos = refeicaoTotal.carboidratos
+    let proteinas = refeicaoTotal.proteinas
+    let gorduras = refeicaoTotal.gorduras
     let metas = [$('#carbo').val(), $('#prot').val(), $('#gord').val()];
 
     chart1.data.datasets[0].data.push(carboidratos); 

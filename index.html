@@ -6,6 +6,12 @@
     <title>NutriLife</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function alunosAlert(){
+            const name1 = 'Carlos Araújo da Costa N: 169610 \nCaio Almeida de Souza N: 169596'
+            alert(name1)
+        }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -13,8 +19,8 @@
             <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
         </div>
         <ul class="menu">
-            <li><a href="#">Alunos</a></li>
-            <li><a href="#">Sobre</a></li>
+            <li><a onclick="alunosAlert()">Alunos</a></li>
+            <li><a>Sobre</a></li>
         </ul>
     </header>
     
@@ -28,39 +34,39 @@
         </div>
         <div>
             <img src="assets/image/feijao.jpg" alt="pao frances" id="img2">
-            <input class="linha1" type="text" name="Feijão" placeholder="Ex: 100">
+            <input class="linha1" type="text" name="Feijão" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/pao.jpg" alt="pao frances" id="img3">
-            <input class="linha1" type="text" name="Pão francês" placeholder="Ex: 100">
+            <input class="linha1" type="text" name="Pão francês" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/laranja.jpg" alt="laranja" id="img4">
-            <input class="linha1" type="text" name="Laranja" placeholder="Ex: 100">
+            <input class="linha1" type="text" name="Laranja" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/carne_bovina.jpg" alt="carne bovina" id="img5">
-            <input class="linha1" type="text" name="Carne Bovina" placeholder="Ex: 100">
+            <input class="linha1" type="text" name="Carne Bovina" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/frango.jpg" alt="feijao" id="img6">
-            <input class="linha2" type="text" name="Carne de Frango" placeholder="Ex: 100">
+            <input class="linha2" type="text" name="Carne de Frango" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/ovo.jpg" alt="ovo" id="img7">
-            <input class="linha2" type="text" name="Ovo" placeholder="Ex: 100">
+            <input class="linha2" type="text" name="Ovo" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/cafe.jpg" alt="cafe" id="img8">
-            <input class="linha2" type="text" name="Café" placeholder="Ex: 100">
+            <input class="linha2" type="text" name="Café" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/banana.jpg" alt="banana" id="img9">
-            <input class="linha2" type="text" name="Banana" placeholder="Ex: 100">
+            <input class="linha2" type="text" name="Banana" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/batata.jpg" alt="batata" id="img10">
-            <input class="linha2" type="text" name="Batata Branca" placeholder="Ex: 100">
+            <input class="linha2" type="text" name="Batata Branca" placeholder="Ex: 100g">
         </div>
     </section>
 
@@ -109,8 +115,7 @@ Object.entries(alimentos).forEach(([chave, valor]) => {
                             </table>
                           </div>`);
 });
-
-        
+console.log(localStorage.getItem('primeira'))
     </script>
 </body>
 </html>
