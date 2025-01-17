@@ -140,6 +140,21 @@
 };
         atualizarNutri()
     
+    function refTotal(){
+        var carbo_total = 0  
+        var prot_total = 0
+        var gord_total = 0
+
+        local.forEach(item => {
+            carbo_total += parseFloat(item[0]) || 0
+            prot_total += parseFloat(item[1]) || 0
+            gord_total += parseFloat( item[2]) || 0
+        })
+    console.log(carbo_total)
+    console.log(prot_total)
+    console.log(gord_total)
+    }
+
     function recurperarItens(){
         if (localStorage.getItem('primeira')){
             $('#carbo1').text(local[0][0] + 'g');
@@ -192,7 +207,6 @@
             valoresMarcados.forEach((refeicao) => {
                 const [carbo, prot, gord] = refeicoes[refeicao];
                 localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura])
-                console.log(localStorage.getItem(refeicao))
                 $(carbo).text(info.carboidrato + 'g');
                 $(prot).text(info.proteina + 'g');
                 $(gord).text(info.gordura + 'g');
