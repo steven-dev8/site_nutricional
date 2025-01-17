@@ -68,25 +68,25 @@
                 <td>GORDURA</td>
             </tr>
             <tr>
-                <td>DIA 1</td> <td></td> <td></td> <td></td>
+                <td>DIA 1</td> <td id="carboDia1"></td> <td id="protDia1"></td> <td id="gordDia1"></td>
             </tr>
             <tr>
-                <td>DIA 2</td> <td></td> <td></td> <td></td>
+                <td>DIA 2</td> <td id="carboDia2"></td> <td id="protDia2"></td> <td id="gordDia2"></td>
             </tr>
             <tr>
-                <td>DIA 3</td> <td></td> <td></td> <td></td>
+                <td>DIA 3</td> <td id="carboDia3"></td> <td id="protDia3"></td> <td id="gordDia3"></td>
             </tr>
             <tr>
-                <td>DIA 4</td> <td></td> <td></td> <td></td>
+                <td>DIA 4</td> <td id="carboDia4"></td> <td id="protDia4"></td> <td id="gordDia4"></td>
             </tr>
             <tr>
-                <td>DIA 5</td> <td></td> <td></td> <td></td>
+                <td>DIA 5</td> <td id="carboDia5"></td> <td id="protDia5"></td> <td id="gordDia5"></td>
             </tr>
             <tr>
-                <td>DIA 6</td> <td></td> <td></td> <td></td>
+                <td>DIA 6</td> <td id="carboDia6"></td> <td id="protDia6"></td> <td id="gordDia6"></td>
             </tr>
             <tr>
-                <td>DIA 7</td> <td></td> <td></td> <td></td>
+                <td>DIA 7</td> <td id="carboDia7"></td> <td id="protDia7"></td> <td id="gordDia7"></td>
             </tr>
         </table>
     </div>
@@ -141,23 +141,40 @@
         atualizarNutri()
     
     function refTotal(){
-        var carbo_total = 0  
-        var prot_total = 0
-        var gord_total = 0
+        let carbo_total = 0  
+        let prot_total = 0
+        let gord_total = 0
 
         local.forEach(item => {
             carbo_total += parseFloat(item[0]) || 0
             prot_total += parseFloat(item[1]) || 0
             gord_total += parseFloat( item[2]) || 0
         })
-    console.log(carbo_total)
-    console.log(prot_total)
-    console.log(gord_total)
+        return {carbo_total, prot_total, gord_total};
+
     }
+
+    let diaAtual = 1;  
+
+function add_dias_semanas() {
+    window.location.reload()
+    const { carbo_total, prot_total, gord_total } = refTotal();
+    if (diaAtual <= 7){
+
+    $('#carboDia' + String(diaAtual)).text(carbo_total + 'g');
+    $('#protDia' + String(diaAtual)).text(prot_total + 'g');
+    $('#gordDia' + String(diaAtual)).text(gord_total + 'g');
+    diaAtual += 1;
+} else{
+    alert('todos os dias já foram completos')
+}    
+    
+}
+
 
     function recurperarItens(){
         if (localStorage.getItem('primeira')){
-            $('#carbo1').text(local[0][0] + 'g');
+            $('#carbo').text(local[0][0] + 'g');
             $('#prot1').text(local[0][1] + 'g');
             $('#gord1').text(local[0][2] + 'g');
         }
@@ -178,6 +195,7 @@
             $('#carbo4').text(local[3][0] + 'g');
             $('#prot4').text(local[3][1] + 'g');
             $('#gord4').text(local[3][2] + 'g');
+        
         }}
 
         recurperarItens()
@@ -191,27 +209,30 @@
         }
 
         function addRefeicao() {
-            atualizarNutri()
-            let valoresMarcados = [];
-            $('input[type="checkbox"]:checked').each(function () {
-                valoresMarcados.push($(this).val());
-            });
+    atualizarNutri();  
+    let valoresMarcados = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        valoresMarcados.push($(this).val());
+    });
 
-            const refeicoes = {
-                'primeira': ['#carbo1', '#prot1', '#gord1'],
-                'segunda': ['#carbo2', '#prot2', '#gord2'],
-                'terceira': ['#carbo3', '#prot3', '#gord3'],
-                'quarta': ['#carbo4', '#prot4', '#gord4']
-            };
+    const refeicoes = {
+        'primeira': ['#carbo1', '#prot1', '#gord1'],
+        'segunda': ['#carbo2', '#prot2', '#gord2'],
+        'terceira': ['#carbo3', '#prot3', '#gord3'],
+        'quarta': ['#carbo4', '#prot4', '#gord4']
+    };
 
-            valoresMarcados.forEach((refeicao) => {
-                const [carbo, prot, gord] = refeicoes[refeicao];
-                localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura])
-                $(carbo).text(info.carboidrato + 'g');
-                $(prot).text(info.proteina + 'g');
-                $(gord).text(info.gordura + 'g');
-            });
-        }
+    valoresMarcados.forEach((refeicao) => {
+        const [carbo, prot, gord] = refeicoes[refeicao];
+        localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura]);
+        $(carbo).text(info.carboidrato + 'g');
+        $(prot).text(info.proteina + 'g');
+        $(gord).text(info.gordura + 'g');
+        
+    });
+
+}
+
     </script>
 
     <div class="container2">
@@ -222,7 +243,8 @@
                 <td>Gordura: <input type="text" id="gord"></td>
             </tr>
         </table>
-        <button class="botao2" onclick="atualizarGrafico()">Adicionar dia a semana</button>
+        <button class="botao2" onclick="add_dias_semanas()">Adicionar dia a semana</button>
+        <button id="botao_dia" class="botao2" onclick="atualizarGrafico()">Comparar dias e metas</button>
         <div class="grafico">
             <canvas id="metas"></canvas>
         </div>
