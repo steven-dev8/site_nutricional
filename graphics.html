@@ -14,10 +14,6 @@
     <div class="logo">
         <img src="assets/image/logo_apenas_imagem.png" alt="logo" class="img_logo">
     </div>
-    <ul class="menu">
-        <li><a href="#">Alunos</a></li>
-        <li><a href="#">Sobre</a></li>
-    </ul>
 </header>
   <div id="inputs-container"></div><br>
   <div class="graph">
@@ -26,6 +22,7 @@
   </div>
 
   <script>
+    // Pega as informações os inputs passados
     const param_food = new URLSearchParams(window.location.search)
     var dict_comidas = new Map()
     param_food.forEach((quant, comida) => {
@@ -33,12 +30,13 @@
         dict_comidas.set(comida, quant)
       }
     })
-
+    // Envia informações das comidas para a próxima página
     function getInfos(){
         const string_url = new URLSearchParams(dict_comidas).toString();
         window.location.href = `semanas.html?${string_url}`;
       }
-
+    
+    // Simulação de um CSV com objeto
     const alimentos = {
       'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
       'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
@@ -51,6 +49,8 @@
       'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
       'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
     };
+
+    // Calcula o total de nutrientes
     function calcularNutrientes() {
       var resultados = { carboidratos: [], proteinas: [], gorduras: [] };
       var lista_comidas = []
@@ -61,10 +61,11 @@
         resultados.proteinas.push((parseFloat(quant) * parseFloat(alimentos[comida].proteinas)) / 100)
         resultados.gorduras.push((parseFloat(quant) * parseFloat(alimentos[comida].gorduras)) / 100)
       })
+      // Atualiza o grafico
       atualizarGrafico(lista_comidas, resultados)
     }
     
-
+    // Cria e atualiza o gráfico com informações extraidas do input
     function atualizarGrafico(lista_comidas, resultados = null) {
       chart1.data.labels = lista_comidas;
       chart1.data.datasets[0].data = resultados.carboidratos;
@@ -80,7 +81,7 @@
       chart2.data.datasets[0].data = totais;
       chart2.update();
     }
-
+    // CRIAÇÃO DO GRAFICO COM CHART
     $(document).ready(function() {
       const ctx1 = document.getElementById('grafico1').getContext('2d');
       chart1 = new Chart(ctx1, {

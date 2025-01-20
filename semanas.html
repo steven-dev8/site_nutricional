@@ -68,113 +68,127 @@
                 <td>GORDURA</td>
             </tr>
             <tr>
-                <td>DIA 1</td> <td id="carboDia1"></td> <td id="protDia1"></td> <td id="gordDia1"></td>
+                <td>DIA 1</td> <td id="carbD1"></td> <td id="protD1"></td> <td id="gordD1"></td>
             </tr>
             <tr>
-                <td>DIA 2</td> <td id="carboDia2"></td> <td id="protDia2"></td> <td id="gordDia2"></td>
+                <td>DIA 2</td> <td id="carbD2"></td> <td id="protD2"></td> <td id="gordD2"></td>
             </tr>
             <tr>
-                <td>DIA 3</td> <td id="carboDia3"></td> <td id="protDia3"></td> <td id="gordDia3"></td>
+                <td>DIA 3</td> <td id="carbD3"></td> <td id="protD3"></td> <td id="gordD3"></td>
             </tr>
             <tr>
-                <td>DIA 4</td> <td id="carboDia4"></td> <td id="protDia4"></td> <td id="gordDia4"></td>
+                <td>DIA 4</td> <td id="carbD4"></td> <td id="protD4"></td> <td id="gordD4"></td>
             </tr>
             <tr>
-                <td>DIA 5</td> <td id="carboDia5"></td> <td id="protDia5"></td> <td id="gordDia5"></td>
+                <td>DIA 5</td> <td id="carbD5"></td> <td id="protD5"></td> <td id="gordD5"></td>
             </tr>
             <tr>
-                <td>DIA 6</td> <td id="carboDia6"></td> <td id="protDia6"></td> <td id="gordDia6"></td>
+                <td>DIA 6</td> <td id="carbD6"></td> <td id="protD6"></td> <td id="gordD6"></td>
             </tr>
             <tr>
-                <td>DIA 7</td> <td id="carboDia7"></td> <td id="protDia7"></td> <td id="gordDia7"></td>
+                <td>DIA 7</td> <td id="carbD7"></td> <td id="protD7"></td> <td id="gordD7"></td>
+            </tr>
+            <tr>
+                <td colspan="4"><button class="btn_semana" onclick="limparSem()">RESETAR SEMANA</button></td>
             </tr>
         </table>
     </div>
 
 
     <script>
+    // Simulação de um CSV com objeto
+    const alimentos = {
+        'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
+        'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
+        'Pão francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5 },
+        'Laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12 },
+        'Carne Bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0 },
+        'Carne de Frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6 },
+        'Ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0 },
+        'Café': { carboidratos: 0.0, proteinas: 0.0, gorduras: 0.0 },
+        'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
+        'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
+    };
 
-        const alimentos = {
-            'Arroz branco': { carboidratos: 28.2, proteinas: 2.7, gorduras: 0.3 },
-            'Feijão': { carboidratos: 20.0, proteinas: 9.0, gorduras: 0.5 },
-            'Pão francês': { carboidratos: 50.0, proteinas: 9.0, gorduras: 2.5 },
-            'Laranja': { carboidratos: 11.75, proteinas: 0.94, gorduras: 0.12 },
-            'Carne Bovina': { carboidratos: 0.0, proteinas: 26.0, gorduras: 20.0 },
-            'Carne de Frango': { carboidratos: 0.0, proteinas: 31.0, gorduras: 3.6 },
-            'Ovo': { carboidratos: 0.73, proteinas: 13.0, gorduras: 10.0 },
-            'Café': { carboidratos: 0.0, proteinas: 0.0, gorduras: 0.0 },
-            'Banana': { carboidratos: 22.84, proteinas: 1.09, gorduras: 0.33 },
-            'Batata Branca': { carboidratos: 17.58, proteinas: 2.02, gorduras: 0.1 }
-        };
+    // Pega os valores repassados do input e guarda em um objeto
+    const valores = new URLSearchParams(window.location.search);
+    let dados = {};
+    valores.forEach((value, key) => {
+        dados[key] = value;
+    });
 
-        const valores = new URLSearchParams(window.location.search);
-        let dados = {};
-        valores.forEach((value, key) => {
-            dados[key] = value;
-        });
+    // Inicializa a página pegando os valores dos dias da semana salvo no localStorage anteriormente 
+    let dias_semana = {}
+    for (var i = 1; i <= 7; i++){
+        dias_semana[`dia${i}`] = localStorage.getItem(`dia${i}`) ? localStorage.getItem(`dia${i}`).split(',') : ''
+    }
 
-        let local = [
-        localStorage.getItem('primeira') ? localStorage.getItem('primeira').split(',') : [],
-        localStorage.getItem('segunda') ? localStorage.getItem('segunda').split(',') : [],
-        localStorage.getItem('terceira') ? localStorage.getItem('terceira').split(',') : [],
-        localStorage.getItem('quarta') ? localStorage.getItem('quarta').split(',') : []
-    ];
-        
-        let info = { carboidrato: 0, proteina: 0, gordura: 0 };
-        Object.keys(dados).forEach(key => {
-            if (alimentos[key]) {
-                info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100);
-                info.proteina += (alimentos[key].proteinas * dados[key] / 100);
-                info.gordura += (alimentos[key].gorduras * dados[key] / 100);
-            }
-        });
+    function atualizarSemana(){
+        for (var i = 1; i <= 7; i++){
+        dias_semana[`dia${i}`] = localStorage.getItem(`dia${i}`) ? localStorage.getItem(`dia${i}`).split(',') : ''
+    }
+    }
+    // Cria um for que preenche, caso exista salvo, os dias da semana
+    for (var i = 1; i <= 7; i++){
+        if (dias_semana[`dia${i}`]){
+            $(`#carbD${i}`).text(dias_semana[[`dia${i}`]][0] + 'g');
+            $(`#protD${i}`).text(dias_semana[[`dia${i}`]][1] + 'g');
+            $(`#gordD${i}`).text(dias_semana[[`dia${i}`]][2] + 'g');
+    }
+    }
 
-    function atualizarNutri(){
-        let refeicaoTotal = {
+    // Inicializa a página pegando os valores das refeições salvo no localStorage anteriormente 
+    let local = [
+    localStorage.getItem('primeira') ? localStorage.getItem('primeira').split(',') : [],
+    localStorage.getItem('segunda') ? localStorage.getItem('segunda').split(',') : [],
+    localStorage.getItem('terceira') ? localStorage.getItem('terceira').split(',') : [],
+    localStorage.getItem('quarta') ? localStorage.getItem('quarta').split(',') : []
+];
+    
+    // Soma o total dos nutrientes
+    let info = { carboidrato: 0, proteina: 0, gordura: 0 };
+    Object.keys(dados).forEach(key => {
+        if (alimentos[key]) {
+            info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100);
+            info.proteina += (alimentos[key].proteinas * dados[key] / 100);
+            info.gordura += (alimentos[key].gorduras * dados[key] / 100);
+        }
+    });
+
+    // Salva os dias adicionados no localStorage
+    function salvarDias(){
+        for (var i = 1; i <= 7; i++){
+            localStorage.setItem(`dia${i}`, [$(`#carboD${i}`).text(), $(`#protD${i}`).text(), $(`#gordD${i}`).text()])
+        }
+    }
+
+    // Soma todos os nutrientes passados para refeição
+    let refeicaoTotal = {
             carboidratos: (parseFloat(local[0][0] || 0) + parseFloat(local[1][0] || 0) +
                         parseFloat(local[2][0] || 0) + parseFloat(local[3][0] || 0)),
             proteinas: (parseFloat(local[0][1] || 0) + parseFloat(local[1][1] || 0) +
                         parseFloat(local[2][1] || 0) + parseFloat(local[3][1] || 0)),
             gorduras: (parseFloat(local[0][2] || 0) + parseFloat(local[1][2] || 0) +
                     parseFloat(local[2][2] || 0) + parseFloat(local[3][2] || 0))}
-};
-        atualizarNutri()
+
     
     function refTotal(){
-        let carbo_total = 0  
-        let prot_total = 0
-        let gord_total = 0
+        var carbo_total = 0  
+        var prot_total = 0
+        var gord_total = 0
 
         local.forEach(item => {
             carbo_total += parseFloat(item[0]) || 0
             prot_total += parseFloat(item[1]) || 0
             gord_total += parseFloat( item[2]) || 0
         })
-        return {carbo_total, prot_total, gord_total};
 
     }
 
-    let diaAtual = 1;  
-
-function add_dias_semanas() {
-    window.location.reload()
-    const { carbo_total, prot_total, gord_total } = refTotal();
-    if (diaAtual <= 7){
-
-    $('#carboDia' + String(diaAtual)).text(carbo_total + 'g');
-    $('#protDia' + String(diaAtual)).text(prot_total + 'g');
-    $('#gordDia' + String(diaAtual)).text(gord_total + 'g');
-    diaAtual += 1;
-} else{
-    alert('todos os dias já foram completos')
-}    
-    
-}
-
-
+    // Reescreve os valores salvos no localStorage nas refeições
     function recurperarItens(){
         if (localStorage.getItem('primeira')){
-            $('#carbo').text(local[0][0] + 'g');
+            $('#carbo1').text(local[0][0] + 'g');
             $('#prot1').text(local[0][1] + 'g');
             $('#gord1').text(local[0][2] + 'g');
         }
@@ -195,44 +209,62 @@ function add_dias_semanas() {
             $('#carbo4').text(local[3][0] + 'g');
             $('#prot4').text(local[3][1] + 'g');
             $('#gord4').text(local[3][2] + 'g');
-        
         }}
 
+        
         recurperarItens()
 
-        function limparRef(){
-            localStorage.getItem('primeira') ? localStorage.removeItem('primeira'): null,
-            localStorage.getItem('segunda') ? localStorage.removeItem('segunda'): null,
-            localStorage.getItem('terceira') ? localStorage.removeItem('terceira'): null,
-            localStorage.getItem('quarta') ? localStorage.removeItem('quarta'): null
-            location.reload()
+    // Adiciona o total das refeições no dia da semana, armazenando os mesmos no localStorage
+    function addDiaSemana(){
+        for (var i = 1; i <= 7; i++){
+            if (dias_semana[`dia${i}`] == ''){
+                localStorage.setItem(`dia${i}`, [refeicaoTotal.carboidratos, refeicaoTotal.proteinas, refeicaoTotal.gorduras])
+                $(`#carbD${i}`).text(`${refeicaoTotal.carboidratos}g`)
+                $(`#protD${i}`).text(`${refeicaoTotal.proteinas}g`)
+                $(`#gordD${i}`).text(`${refeicaoTotal.gorduras}g`)
+                atualizarSemana()
+                break
+            }}}
+
+    // Limpa as refeições do localStorage e da página
+    function limparRef(){
+        localStorage.getItem('primeira') ? localStorage.removeItem('primeira'): null,
+        localStorage.getItem('segunda') ? localStorage.removeItem('segunda'): null,
+        localStorage.getItem('terceira') ? localStorage.removeItem('terceira'): null,
+        localStorage.getItem('quarta') ? localStorage.removeItem('quarta'): null
+        location.reload()
+    }
+
+    // Adiciona a refeição nos IDs correspondente marcados no checkbox
+    function addRefeicao() {
+        let valoresMarcados = [];
+            $('input[type="checkbox"]:checked').each(function () {
+            valoresMarcados.push($(this).val());
+        });
+
+        const refeicoes = {
+            'primeira': ['#carbo1', '#prot1', '#gord1'],
+            'segunda': ['#carbo2', '#prot2', '#gord2'],
+            'terceira': ['#carbo3', '#prot3', '#gord3'],
+            'quarta': ['#carbo4', '#prot4', '#gord4']
+        };
+
+        valoresMarcados.forEach((refeicao) => {
+            const [carbo, prot, gord] = refeicoes[refeicao];
+            localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura])
+            $(carbo).text(info.carboidrato + 'g');
+            $(prot).text(info.proteina + 'g');
+            $(gord).text(info.gordura + 'g');
+        });
+    window.location.reload()}
+
+    // Limpa os dias da semana na página e remove do localStorage
+    function limparSem(){
+        for (var i = 1; i <= 7; i++){
+            localStorage.removeItem(`dia${i}`)
         }
-
-        function addRefeicao() {
-    atualizarNutri();  
-    let valoresMarcados = [];
-    $('input[type="checkbox"]:checked').each(function () {
-        valoresMarcados.push($(this).val());
-    });
-
-    const refeicoes = {
-        'primeira': ['#carbo1', '#prot1', '#gord1'],
-        'segunda': ['#carbo2', '#prot2', '#gord2'],
-        'terceira': ['#carbo3', '#prot3', '#gord3'],
-        'quarta': ['#carbo4', '#prot4', '#gord4']
-    };
-
-    valoresMarcados.forEach((refeicao) => {
-        const [carbo, prot, gord] = refeicoes[refeicao];
-        localStorage.setItem(refeicao, [info.carboidrato, info.proteina, info.gordura]);
-        $(carbo).text(info.carboidrato + 'g');
-        $(prot).text(info.proteina + 'g');
-        $(gord).text(info.gordura + 'g');
-        
-    });
-
-}
-
+    window.location.reload()
+    }
     </script>
 
     <div class="container2">
@@ -243,8 +275,12 @@ function add_dias_semanas() {
                 <td>Gordura: <input type="text" id="gord"></td>
             </tr>
         </table>
-        <button class="botao2" onclick="add_dias_semanas()">Adicionar dia a semana</button>
-        <button id="botao_dia" class="botao2" onclick="atualizarGrafico()">Comparar dias e metas</button>
+        <table class="botoes">
+        <tr>
+        <td><button class="botao2" onclick="addDiaSemana()">Adicionar dia a semana</button>
+        <button onclick="atualizarGrafico()" class="botao2">Comparar % de metas</button></td>
+        </tr>
+        </table>
         <div class="grafico">
             <canvas id="metas"></canvas>
         </div>
@@ -253,97 +289,82 @@ function add_dias_semanas() {
     <footer><p>© aNutriLife - Since 2024</p></footer>
 
     <script>
-        let chart1;
-$(document).ready(function() {
-    const ctx = $('#metas');
-    chart1 = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Dia 1', 'Dia 2', 'Dia 3'],
-            datasets: [
-                {
-                    label: 'Carboidratos(g)',
-                    data: [],
-                    borderColor: '#6fe904',
-                    backgroundColor: 'rgba(111, 233, 4, 0.2)',
-                    tension: 0.4,
-                    fill: false
-                },
-                {
-                    label: 'Proteínas(g)',
-                    data: [],
-                    borderColor: '#608E37',
-                    backgroundColor: 'rgba(96, 142, 55, 0.2)',
-                    tension: 0.4,
-                    fill: false
-                },
-                {
-                    label: 'Gorduras(g)',
-                    data: [],
-                    borderColor: '#36521f',
-                    backgroundColor: 'rgba(54, 82, 31, 0.2)',
-                    tension: 0.4,
-                    fill: false
-                },
-                {
-                    label: 'Meta Carboidratos(g)',
-                    data: [],
-                    borderColor: '#FA9F00',
-                    backgroundColor: 'rgba(250, 159, 0, 1)',
-                    tension: 0.4,
-                    fill: false,
-                    borderDash: [5, 5], 
-                },
-                {
-                    label: 'Meta Proteínas(g)',
-                    data: [],
-                    borderColor: '#FA9F00',
-                    backgroundColor: 'rgba(250, 159, 0, 1)',
-                    tension: 0.4,
-                    fill: false,
-                    borderDash: [5, 5],
-                },
-                {
-                    label: 'Meta Gorduras(g)',
-                    data: [],
-                    borderColor: '#FA9F00',
-                    backgroundColor: 'rgba(250, 159, 0, 1)',
-                    tension: 0.4,
-                    fill: false,
-                    borderDash: [5, 5],
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                title: { display: true, text: 'METAS' }
+    // Cria os gráficos de metas
+    let chart1;
+        $(document).ready(function() {
+        const ctx = $('#metas');
+        chart1 = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Carboidratos(g) em %',
+                        data: [],
+                        borderColor: '#6fe904',
+                        backgroundColor: '#6fe904',
+                        fill: false
+                    },
+                    {
+                        label: 'Proteínas(g) em %',
+                        data: [],
+                        borderColor: '#608E37',
+                        backgroundColor: '#608E37',
+                        fill: false
+                    },
+                    {
+                        label: 'Gorduras(g) em %',
+                        data: [],
+                        borderColor: '#36521f',
+                        backgroundColor: '#36521f',
+                        fill: false
+                    },
+                ]
             },
-            scales: {
-                y: {
-                    beginAtZero: true
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'METAS EM %' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
+        });
     });
-});
 
 
 function atualizarGrafico() {
+    let listadia = []
+    let listacarbo = []
+    let listaprot = []
+    let listagord = []
+
+    let metas = [$('#carbo').val(), $('#prot').val(), $('#gord').val()];
+
+    for (const [chave, valor] of Object.entries(dias_semana)) {
+        if (valor != ''){
+        listadia.push(chave)
+        listacarbo.push(valor[0] * 100 / metas[0])
+        listaprot.push(valor[1] * 100 / metas[1])
+        listagord.push(valor[2] * 100 / metas[2])
+        }}
+
     let carboidratos = refeicaoTotal.carboidratos
     let proteinas = refeicaoTotal.proteinas
     let gorduras = refeicaoTotal.gorduras
-    let metas = [$('#carbo').val(), $('#prot').val(), $('#gord').val()];
 
-    chart1.data.datasets[0].data.push(carboidratos); 
-    chart1.data.datasets[1].data.push(proteinas);    
-    chart1.data.datasets[2].data.push(gorduras);
 
-    chart1.data.datasets[3].data.push(parseFloat(metas[0])); 
-    chart1.data.datasets[4].data.push(parseFloat(metas[1])); 
-    chart1.data.datasets[5].data.push(parseFloat(metas[2])); 
+    chart1.data.labels = listadia;
+    chart1.data.datasets[0].data = listacarbo; 
+    chart1.data.datasets[1].data = listaprot;    
+    chart1.data.datasets[2].data = listagord;
 
     chart1.update(); 
 }
     </script>
+</body>
+</html>

@@ -3,13 +3,17 @@
     margin: 0;
     box-sizing: border-box;
 }
+.botoes td {
+    border: none ;
+    
+}
 table.refeicoes{
     border: 3px solid #608E37;
     border-collapse: separate;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    top: 238px;
+    top: 280px;
 }
 table.adicionar{
     border: 3px solid #608E37;
@@ -20,7 +24,7 @@ table.adicionar{
     padding: 10px;
     white-space: nowrap;
     position: relative;
-    top:260px;
+    top:300px;
 }
 
 .adicionar tr td{
@@ -87,7 +91,7 @@ footer p{
     height: 50vh;
     width: 100%;
     position: relative;
-    bottom: 100px;
+    bottom: 115px;
 }
 
 .tamanho{
@@ -115,10 +119,11 @@ caption{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 900px;
     height: 100%;
     flex-direction: column;
     position: relative;
+    left: 500px;
     bottom: 20px;
     height: 363px;
 }
@@ -133,7 +138,7 @@ caption{
     display: flex;
     justify-content: center;
     width: 600px;
-    margin: 0px 0px 15px 0px
+    margin: 10px
 }
 .botao2{
     width: 180px;
@@ -149,11 +154,21 @@ caption{
     overflow: hidden;
     position: relative;
     left: 650px;
-    top: 270px;
+    top: 250px;
 }
 
 .botao_maior{
     border-radius: 10px;
     width: 160px;
-    
+}
+.btn_semana{
+    width: 180px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+canvas{
+    position: relative;
+    bottom: 15px;
 }
