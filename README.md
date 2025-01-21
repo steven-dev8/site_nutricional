@@ -2,7 +2,7 @@
 
 **NutriLife** é uma aplicação web nutricional que auxilia no cálculo e acompanhamento dos macronutrientes consumidos diariamente. A plataforma também oferece gráficos interativos, comparações com metas diárias e a possibilidade de planejar e adicionar os macronutrientes ao longo da semana.
 
-Este projeto foi desenvolvido como trabalho de conclusão da disciplina de **Sistemas para Internet**.
+Este projeto foi desenvolvido como trabalho de conclusão da disciplina de **Sistemas para Internet I**.
 
 ## Recursos
 
