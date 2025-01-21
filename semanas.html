@@ -108,7 +108,7 @@
     const valores = new URLSearchParams(window.location.search);
     let dados = {};
     valores.forEach((value, key) => {
-        dados[key] = value;
+        dados[key] = parseFloat(value);
     });
 
     // Inicializa a página pegando os valores dos dias da semana salvo no localStorage anteriormente 
@@ -125,9 +125,9 @@
     // Cria um for que preenche, caso exista salvo, os dias da semana
     for (var i = 1; i <= 7; i++){
         if (dias_semana[`dia${i}`]){
-            $(`#carbD${i}`).text((parseInt(dias_semana[[`dia${i}`]][0])).toFixed(2) + 'g');
-            $(`#protD${i}`).text((parseInt(dias_semana[[`dia${i}`]][1])).toFixed(2) + 'g');
-            $(`#gordD${i}`).text((parseInt(dias_semana[[`dia${i}`]][2])).toFixed(2) + 'g');
+            $(`#carbD${i}`).textparseInt(dias_semana[[`dia${i}`]][0] + 'g');
+            $(`#protD${i}`).textparseInt(dias_semana[[`dia${i}`]][1] + 'g');
+            $(`#gordD${i}`).textparseInt(dias_semana[[`dia${i}`]][2] + 'g');
     }
     }
 
@@ -143,11 +143,15 @@
     let info = { carboidrato: 0, proteina: 0, gordura: 0 };
     Object.keys(dados).forEach(key => {
         if (alimentos[key]) {
-            info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100).toFixed(2);
-            info.proteina += (alimentos[key].proteinas * dados[key] / 100).toFixed(2);
-            info.gordura += (alimentos[key].gorduras * dados[key] / 100).toFixed(2);
+            info.carboidrato += parseFloat(alimentos[key].carboidratos * dados[key] / 100);
+            info.proteina += parseFloat(alimentos[key].proteinas * dados[key] / 100);
+            info.gordura += parseFloat(alimentos[key].gorduras * dados[key] / 100);
         }
     });
+
+info.carboidrato = info.carboidrato.toFixed(2);
+info.proteina = info.proteina.toFixed(2);
+info.gordura = info.gordura.toFixed(2);
 
     // Salva os dias adicionados no localStorage
     function salvarDias(){
@@ -164,7 +168,6 @@
                         parseFloat(local[2][1] || 0) + parseFloat(local[3][1] || 0)),
             gorduras: (parseFloat(local[0][2] || 0) + parseFloat(local[1][2] || 0) +
                     parseFloat(local[2][2] || 0) + parseFloat(local[3][2] || 0))}
-
     
     function refTotal(){
         var carbo_total = 0  
@@ -212,10 +215,10 @@
     function addDiaSemana(){
         for (var i = 1; i <= 7; i++){
             if (dias_semana[`dia${i}`] == ''){
-                localStorage.setItem(`dia${i}`, [(refeicaoTotal.carboidratos).toFixed(2), (refeicaoTotal.proteinas).toFixed(2), (refeicaoTotal.gorduras).toFixed(2)])
-                $(`#carbD${i}`).text(`${(refeicaoTotal.carboidratos).toFixed(2)}g`)
-                $(`#protD${i}`).text(`${(refeicaoTotal.proteinas).toFixed(2)}g`)
-                $(`#gordD${i}`).text(`${(refeicaoTotal.gorduras).toFixed(2)}g`)
+                localStorage.setItem(`dia${i}`, [refeicaoTotal.carboidratos, refeicaoTotal.proteinas, refeicaoTotal.gorduras])
+                $(`#carbD${i}`).text(`${refeicaoTotal.carboidratos}g`)
+                $(`#protD${i}`).text(`${refeicaoTotal.proteinas}g`)
+                $(`#gordD${i}`).text(`${refeicaoTotal.gorduras}g`)
                 atualizarSemana()
                 break
             }}}
