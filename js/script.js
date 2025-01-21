@@ -1,3 +1,1 @@
-function adicionarRefeicao(){
-    
-}
+// Pra não dizer que fizemos nada nesse JS, utilizamos esse arquivo para fazer os testes dos scripts que utilizamos no HTML
