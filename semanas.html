@@ -125,9 +125,9 @@
     // Cria um for que preenche, caso exista salvo, os dias da semana
     for (var i = 1; i <= 7; i++){
         if (dias_semana[`dia${i}`]){
-            $(`#carbD${i}`).text(dias_semana[[`dia${i}`]][0] + 'g');
-            $(`#protD${i}`).text(dias_semana[[`dia${i}`]][1] + 'g');
-            $(`#gordD${i}`).text(dias_semana[[`dia${i}`]][2] + 'g');
+            $(`#carbD${i}`).text((parseInt(dias_semana[[`dia${i}`]][0])).toFixed(2) + 'g');
+            $(`#protD${i}`).text((parseInt(dias_semana[[`dia${i}`]][1])).toFixed(2) + 'g');
+            $(`#gordD${i}`).text((parseInt(dias_semana[[`dia${i}`]][2])).toFixed(2) + 'g');
     }
     }
 
@@ -143,9 +143,9 @@
     let info = { carboidrato: 0, proteina: 0, gordura: 0 };
     Object.keys(dados).forEach(key => {
         if (alimentos[key]) {
-            info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100);
-            info.proteina += (alimentos[key].proteinas * dados[key] / 100);
-            info.gordura += (alimentos[key].gorduras * dados[key] / 100);
+            info.carboidrato += (alimentos[key].carboidratos * dados[key] / 100).toFixed(2);
+            info.proteina += (alimentos[key].proteinas * dados[key] / 100).toFixed(2);
+            info.gordura += (alimentos[key].gorduras * dados[key] / 100).toFixed(2);
         }
     });
 
@@ -212,10 +212,10 @@
     function addDiaSemana(){
         for (var i = 1; i <= 7; i++){
             if (dias_semana[`dia${i}`] == ''){
-                localStorage.setItem(`dia${i}`, [refeicaoTotal.carboidratos, refeicaoTotal.proteinas, refeicaoTotal.gorduras])
-                $(`#carbD${i}`).text(`${refeicaoTotal.carboidratos}g`)
-                $(`#protD${i}`).text(`${refeicaoTotal.proteinas}g`)
-                $(`#gordD${i}`).text(`${refeicaoTotal.gorduras}g`)
+                localStorage.setItem(`dia${i}`, [(refeicaoTotal.carboidratos).toFixed(2), (refeicaoTotal.proteinas).toFixed(2), (refeicaoTotal.gorduras).toFixed(2)])
+                $(`#carbD${i}`).text(`${(refeicaoTotal.carboidratos).toFixed(2)}g`)
+                $(`#protD${i}`).text(`${(refeicaoTotal.proteinas).toFixed(2)}g`)
+                $(`#gordD${i}`).text(`${(refeicaoTotal.gorduras).toFixed(2)}g`)
                 atualizarSemana()
                 break
             }}}
