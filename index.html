@@ -39,7 +39,7 @@
         </div>
         <div>
             <img src="assets/image/pao.jpg" alt="pao frances" id="img3">
-            <input class="linha1" type="text" name="Pão francês" placeholder="Ex: 100g">
+            <input class="pao" type="text" name="Pão francês" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/laranja.jpg" alt="laranja" id="img4">
@@ -59,7 +59,7 @@
         </div>
         <div>
             <img src="assets/image/cafe.jpg" alt="cafe" id="img8">
-            <input class="linha2" type="text" name="Café" placeholder="Ex: 100g">
+            <input class="cafe" type="text" name="Café" placeholder="Ex: 100g">
         </div>
         <div>
             <img src="assets/image/banana.jpg" alt="banana" id="img9">
@@ -109,10 +109,11 @@
                                             <td class="carboidrato">Carboidrato:${valor.carboidratos}g</td>
                                             <td class="gordura">Gordura:${valor.gorduras}g</td>
                                             ${valor.fibras > 1 ? `<td class="fibra">Fibras: ${valor.fibras}mg</td>` : '<td class="off"></td>'}
-                                            ${valor.acucares > 10 ? `<td class="acuca">Açúcares: ${valor.acucares}mg</td>` : '<td class="off"></td>'}
+                                            ${valor.acucares > 50 ? `<td class="acuca">Açúcares: ${valor.acucares}mg</td>` : '<td class="off"></td>'}
                                             ${valor.sodio > 10 ? `<td class="sodio">Sódio: ${valor.sodio}mg</td>` : '<td class="off"></td>'}
                                             ${valor.potassio > 10 ? `<td class="pota">Potássio: ${valor.potassio}mg</td>` : '<td class="off"></td>'}
                                             ${valor.calcio > 10 ? `<td class="cal">Cálcio: ${valor.calcio}mg</td>` : '<td class="off"></td>'}
+                                            ${valor.vitaminas ? `<td class="vit">Vitaminas: ${valor.vitaminas}</td>` : '<td class="off"></td>'}
                                         </tr>
                                     </table>
                                 </div>`);
