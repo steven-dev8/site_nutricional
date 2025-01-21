@@ -16,6 +16,7 @@ Este projeto foi desenvolvido como trabalho de conclusão da disciplina de **Sis
 - **HTML5**
 - **CSS3**
 - **jQuery**
+- **Chart.js**
 
 ## Como Executar o Projeto
 
