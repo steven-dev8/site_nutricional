@@ -21,4 +21,4 @@ Este projeto foi desenvolvido como trabalho de conclusão da disciplina de **Sis
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/steven-dev8/site_nutricional```
+   git clone https://github.com/steven-dev8/site_nutricional
